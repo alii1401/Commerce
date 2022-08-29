@@ -1,0 +1,46 @@
+{% extends 'auctions/layout.html' %}
+{% load static %}
+
+{% block body %}
+{% for p in products %}
+    {{ p.listing.title }}
+{% endfor %}
+<h2 id="font" style="color:green ;text-align: center; ">WatchList</h2>
+
+{% if inf %}
+        <div id="border"><img src="{{ inf.image }}" alt="{{ inf.image }}"><div>
+        <!-- <a style="color:black;font: 1em sans-serif;"  href=" {% url 'auctions:watchlist' %} "> -->
+            <h5> {{ inf.title }}</h5>
+        <!-- </a> -->
+        <div class="btn btn-secondary">${{ inf.start_price }}</div>
+        {% if current_bid %}
+            {% for c in current_bid %}
+                <div id="font">Your Bid:${{ c.current_bid }}</div>
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div>
+
+{% elif products or message %}
+        {% if message %}
+            <div><h4 style="background-color:rgb(143, 233, 143) ;">{{ message }}</h4></div>
+        {% endif %}
+        {% for product in products %}
+        <div id="border"><img src="{{ product.listing.image }}" alt="{{ product.listing.image }}"><div>
+        <h5 id="font" >
+            <!-- <a href=" {% url 'auctions:watchlist' %} "> -->
+                {{ product.listing.title }}
+            <!-- </a> -->
+        </h5>
+        <div id="font" class="btn btn-secondary">${{ product.listing.start_price }}</div>
+           
+                <div id="font" class="btn btn-warning">Your Bid: ${{ product.current_bid }}</div>
+           
+        </div>
+    </div>
+    {% endfor %}
+{% elif var != 0 %}
+        <h4 style="background-color:red ;">No product have been added to the watchlist! </h4>
+{% endif %}
+
+{% endblock %}

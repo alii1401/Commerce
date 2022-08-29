@@ -1,0 +1,59 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<style>
+    h2{
+        text-align: center;
+        background-color: aqua;
+    }
+
+    h5,h6{
+        margin-top: 30px ;
+        background-color: darkkhaki;
+        color: #000;
+        border: inline;
+    }
+
+    #input{
+        margin-top: 30px ;
+        
+    }
+    i{
+        color: chartreuse;
+        background-color: firebrick;
+    }
+</style>
+{% if message %}
+    <i>{{ message }}</i>
+{% endif %}
+
+<h2 id="font">Create Listing</h2>    
+        
+<div id="font" class="container">
+    <div class="row ">
+<form action=" {% url 'auctions:create' %} " method="post">
+    {% csrf_token %}
+    <input class="btn btn-secondary " disabled type="button" value="Title"><input class="col-md-12 "  name="title" type="text">
+    
+    <h5>Choose a category:</h5>
+    <div><select name="items" id="">
+        {% for category in categories %}
+            {{ category }}
+        <option value="{{category.id}}">{{category}}</option>
+        
+        {% endfor %}
+    </select></div>
+    
+    <input class="btn btn-secondary " disabled id="input" type="button" value="Description"><input class="col-12"  name="description" type="text">
+    
+    <div><input class="btn btn-secondary" disabled id="input" type="button" value="$"><input class="col-12" name="price" type="text" placeholder="Starting Bid" ></div>
+    
+    <h6>Image URL</h6>
+    <input class="btn btn-secondary" disabled type="button" value="https://example.com/"><input style="margin-top:2px;" class="col-12" name="url" type="text">
+    <input style="margin-top:5px ;" class="btn btn-outline-primary" type="submit">
+</form>
+</div>
+</div>
+
+{% endblock %}

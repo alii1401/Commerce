@@ -1,0 +1,133 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<style>
+
+    table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-family:'Times New Roman', Times, serif;
+        background-color: aqua;
+        padding: 10px;
+        }
+    
+    td, th {
+        border: 1px solid black;
+        padding: 20px;
+        text-align: center;
+        }
+    h6{
+        font-size: smaller;
+    }
+    /* body{
+         background-color: blueviolet;
+    } */
+</style>
+{% if message %}
+    <div style="background-color:red ;">{{ message }}</div>
+{% endif %}
+
+
+        <div id="font" class="container">
+            <div class="row">
+                {% if request.user == inf.username %}
+                <div>
+                    <form action="{% url 'auctions:information' inf.id %}" method="POST">
+                        {% csrf_token %}
+                        <input class="btn btn-warning" name="close" value="Close listing" type="submit">
+                    </form>
+                </div>
+                {% endif %}
+                <div class="container">
+                    <div class="row">
+                <div class="sidebar col">
+
+                    <div><h4 class = "col">Listing: {{ inf.title }}</h4></div>
+                    <img style="width: 300px ; "  src = "{{ inf.image }}" alt="{{ inf.title }}">
+                </div>
+
+                
+                <div class="btn btn-secondary"><div>Current Bid:
+                    <div><b>USD {{ usd }} </b></div>
+                    <div>Enter USD {{ usd }} or more</div>
+                    <div>
+                        <form action=" {% url 'auctions:information' inf.id %} " method="post" name="" >
+                            {% csrf_token %}
+                            {% if user.is_authenticated %}
+                                <input disabled type="button" value="$"><input class="text-primary" name="price" type="text" placeholder="Place your bid">
+                                {% if bol == 1 %}
+                                    <input class="btn btn-primary" style="
+                                     height:100px;width:200px;" type="submit" name="remove_watchlist" value="Remove from WatchList">
+                                {% else %}
+                                    <input class="btn btn-primary" style="
+                                    height:100px;width:200px;" type="submit" name="add_watchlist" value="Add to WatchList">
+                                {% endif %}
+                            {% else %}
+                                <input style="background-color:pink ;
+                                color:red;border-radius:5px;height:100px;width:200px;" type="button" value="Please Login to place your bid">
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<hr class="col-12">
+            <div class="container">
+                <div class="row">
+            <div class="col">
+                <h2>Additional Information:</h2>
+            </div>
+            
+            
+            <div class="col">
+                <table id="font">
+                    <thead>
+                        <th>Category</th>
+                        <th>Start Price</th>
+                        <th>Description</th>
+                        <th>Who created</th>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td> {{ inf.category }} </td>
+                            <td> {{ inf.start_price }} </td>
+                            <td> {{ inf.description }} </td>
+                            <td> {{ inf.username }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+        <div class="container">
+            <div class="row">
+            <hr class="col-12">
+            
+            <form class="col-12" action=" {% url 'auctions:information' inf.id %} " method="post">
+                {% csrf_token %}
+    <textarea style="width: 100% ;height: 50%;" placeholder="Add a comment" name="comment" id="" cols="30" rows="10"></textarea>
+    <input class="btn btn-primary" type="submit" name="add_comment" >
+</form>
+                 <div class="col-12">
+                    <h3>Comments</h3>
+                    {% for comment in comments %}
+                        <div class="btn btn-secondary disabled">
+                            {{ comment.username }}<br>
+                    </div> :
+                        <div style="border-style:groove;margin:10px;">{{ comment.comment }}<br><h6>{{ comment.date_posted }}</h6></div>
+
+                    {% endfor %}
+                 </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+<!-- chegooneh chanta form mokhtlf ro b smt
+     yk view bfrstm v dar oon motvjh bsham k ki b kieh -->

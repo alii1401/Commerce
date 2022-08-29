@@ -1,0 +1,16 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+{% if message %}
+    <h3 style="background-color:red ;">{{ message }}</h3>
+{% endif %}
+
+{% for produc in wordlist %}
+<div id="border">
+    <img src="{{ produc.image }}" alt="mouse">
+    <div><h5><a id="font" href=" {% url 'auctions:information' produc.id %}">{{ produc.title }}</a></h5></div>
+    <div id="font" class="btn btn-secondary">${{ produc.start_price }}</div>
+</div>
+{% endfor%}
+
+{% endblock %} 

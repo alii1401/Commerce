@@ -1,0 +1,18 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+    <h5 id="font">Select the category you want: </h5>
+   
+    <ol>
+        <form id="font" action="{% url 'auctions:listing' %}" method="post">
+            {% csrf_token %}
+            <select id="font" class="btn btn-secondary" name="items" id="">
+                {% for item in items %}
+                <option value="{{item}}">{{item}}</option>
+                {% endfor %}
+                <div><input style="margin-left:5px ;" class="btn btn-primary" type="submit"></div>
+            </select>
+        
+</ol>
+ <hr>
+{% endblock %}

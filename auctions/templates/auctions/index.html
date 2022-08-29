@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+<style>
+#font{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+</style>
+    <h2 id="font" style="text-align:center ;" >Active Listings</h2>
+    {% for produc in product %}
+           
+                  <div style="border-style:groove ;margin-bottom: 10px;"><img style="width:250px; height: 230px;" src="{{ produc.image }}" alt="{{ produc.title }}">
+                    <h5 id="font"><a href=" {% url 'auctions:information' produc.id %}"> {{ produc.title }} </a></h5>
+                <div id="font"  aria-disabled="true" class="btn btn-secondary">${{ produc.start_price }}</div></div>
+    {% endfor%} 
+  
+{% endblock %}
